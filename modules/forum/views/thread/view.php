@@ -27,4 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+    <p>
+        <?= Html::a(Yii::t('app', 'Reply'), ['post/create', 'thread_id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    </p>
+
 </div>

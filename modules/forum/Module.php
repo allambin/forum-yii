@@ -14,6 +14,7 @@ class Module extends \yii\base\Module
             '@forum-assets' => __DIR__ . '/assets'
         ]);
         \Yii::$container->set('app\modules\forum\repositories\ThreadRepositoryInterface', 'app\modules\forum\repositories\ThreadRepository');
+        \Yii::$container->set('app\modules\forum\repositories\PostRepositoryInterface', 'app\modules\forum\repositories\PostRepository');
         $this->layout = 'main';
     }
 }

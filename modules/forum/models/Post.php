@@ -8,23 +8,24 @@ use yii\db\ActiveRecord;
 use app\modules\forum\components\DisallowUrlsValidator;
 
 /**
- * This is the model class for table "threads".
+ * This is the model class for table "posts".
  *
  * @property integer $id
- * @property string $title
  * @property string $content
  * @property string $creation_date
  * @property integer $author
- * @property integer $views
+ * @property integer $thread_id
+ *
+ * @property Threads $thread
  */
-class Thread extends ActiveRecord
+class Post extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'threads';
+        return 'posts';
     }
 
     /**
@@ -33,12 +34,13 @@ class Thread extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content'], 'required'],
+            [['content'], 'string'],
+            [['creation_date'], 'safe'],
             [['content'], 'string', 'max' => 100],
             ['content', DisallowUrlsValidator::className()],
-            [['creation_date'], 'safe'],
-            [['author', 'views'], 'integer'],
-            [['title'], 'string', 'max' => 255],
+            [['author', 'thread_id'], 'required'],
+            [['author', 'thread_id'], 'integer'],
+            [['thread_id'], 'exist', 'skipOnError' => true, 'targetClass' => Thread::className(), 'targetAttribute' => ['thread_id' => 'id']],
         ];
     }
 
@@ -48,12 +50,11 @@ class Thread extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'content' => 'Content',
-            'creation_date' => 'Creation Date',
-            'author' => 'Author',
-            'views' => 'Views',
+            'id' => Yii::t('app', 'ID'),
+            'content' => Yii::t('app', 'Content'),
+            'creation_date' => Yii::t('app', 'Creation Date'),
+            'author' => Yii::t('app', 'Author'),
+            'thread_id' => Yii::t('app', 'Thread ID'),
         ];
     }
 
@@ -69,4 +70,12 @@ class Thread extends ActiveRecord
             ],
         ];
      }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getThread()
+    {
+        return $this->hasOne(Threads::className(), ['id' => 'thread_id']);
+    }
 }
