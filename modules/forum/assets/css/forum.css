@@ -1,0 +1,45 @@
+.in-caps {
+    font-variant: small-caps;
+}
+
+.color-text-lightest {
+    color: #cacaca;
+}
+
+.accent {
+    color: #337ab7;
+    font-weight: bold;
+}
+
+.thread-list {
+    margin: 30px 0 20px 0;
+}
+
+.thread-list-item {
+    border-bottom: 1px solid #f1f0f0;
+    padding: 0 0 1em;
+    margin: 0 0 1em;
+}
+
+.thread-list-item-title {
+    font-size: 18px;
+}
+
+.thread-list-item-title a {
+    color: #4d545d;
+    font-weight: bold;
+}
+
+.thread-question {
+    padding-bottom: 30px;
+}
+
+.thread-question h1 {
+    color: #4d545d;
+    letter-spacing: -.025em;
+    margin-bottom: 0;
+}
+
+.thread-question-body {
+    padding-top: 20px;
+}
