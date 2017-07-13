@@ -2,10 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-use app\modules\forum\assets\ForumAsset;
-
-ForumAsset::register($this);
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\forum\models\Thread */
@@ -25,6 +22,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?></p>
             <div class="thread-question-body"><?= $model->content; ?></div>
         </div>
+        <?php foreach($model->posts as $post): ?>
+        <?php $user = User::findIdentity($post->author); ?>
+        <div class="thread-reply">
+            <div class="thread-reply-title color-text-lightest">
+                <?= Yii::t('app', '<span class="accent">{username}</span> - {date}', [
+                    'date' => $post->creation_date,
+                    'username' => $user->username
+                ]) ?>
+            </div>
+            <div><?= $post->content; ?></div>
+        </div>
+        <?php endforeach; ?>
     </div>
 
     <p>

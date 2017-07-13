@@ -32,6 +32,8 @@
 
 .thread-question {
     padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px dashed #cacaca;
 }
 
 .thread-question h1 {
@@ -42,4 +44,10 @@
 
 .thread-question-body {
     padding-top: 20px;
+}
+
+.thread-reply {
+    border-bottom: 1px solid #f1f0f0;
+    padding: 0 0 1em;
+    margin: 0 0 1em;
 }

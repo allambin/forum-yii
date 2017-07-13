@@ -68,5 +68,13 @@ class Thread extends ActiveRecord
                 'value' => new Expression('NOW()'),
             ],
         ];
-     }
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosts()
+    {
+        return $this->hasMany(Post::className(), ['thread_id' => 'id']);
+    }
 }
