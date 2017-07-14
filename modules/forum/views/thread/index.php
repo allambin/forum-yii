@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\User;
 use yii\widgets\LinkPager;
+use app\modules\forum\components\ThreadSortingByViews;
+use app\modules\forum\components\ThreadSortingByDate;
+use app\modules\forum\helpers\ThreadSorting;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\forum\models\ThreadSearch */
@@ -18,6 +21,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', 'Create Thread'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <p>
+        Sort by:
+        <?php
+            $allowedSortings = [
+                new ThreadSortingByViews,
+                new ThreadSortingByDate,
+            ];
+            $threadSorting = new ThreadSorting();
+            echo $threadSorting->renderSortingButtons($sort, $direction, $allowedSortings);
+        ?>
+    </p>
+
     <div class="thread-list">
     <?php foreach ($models as $model) : ?>
         <?php $user = User::findIdentity($model->author); ?>
@@ -30,7 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
             <div class="thread-list-item-replies-count color-text-lightest pull-right">
-                <?= Yii::t('app', '{count,plural,=0{no reply} =1{1 reply} other{# replies}}', ['count' => $model->repliesCount]) ?>
+                <?= Yii::t('app', '{count,plural,=0{no reply} =1{1 reply} other{# replies}}', ['count' => $model->repliesCount]) ?> | 
+                <?= Yii::t('app', '{count,plural,=0{no view} =1{1 view} other{# views}}', ['count' => $model->views]) ?>
             </div>
         </div>
     <?php endforeach; ?>

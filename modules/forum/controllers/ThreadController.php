@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\Pagination;
 use app\modules\forum\repositories\ThreadRepositoryInterface;
+use app\modules\forum\helpers\ThreadSorting;
 
 /**
  * ThreadController implements the CRUD actions for Thread model.
@@ -19,10 +20,12 @@ use app\modules\forum\repositories\ThreadRepositoryInterface;
 class ThreadController extends Controller
 {
     protected $threadRepository;
+    protected $threadSorting;
 
-    public function __construct($id, $module, ThreadRepositoryInterface $threadRepository, $config = [])
+    public function __construct($id, $module, ThreadRepositoryInterface $threadRepository, ThreadSorting $threadSorting, $config = [])
     {
         $this->threadRepository = $threadRepository;
+        $this->threadSorting = $threadSorting;
         parent::__construct($id, $module, $config);
     }
 
@@ -49,13 +52,19 @@ class ThreadController extends Controller
     /**
      * Lists all Thread models.
      * @return mixed
+     * @param string $sort
+     * @param string $direction
      */
-    public function actionIndex()
+    public function actionIndex($sort = null, $direction = null)
     {
         $query = $this->threadRepository->find();
         $query->with('repliesAggregation');
+        if(!is_null($sort)) {
+            $sorting = $this->threadSorting->getSortingOptions($sort, $direction);
+            $query->orderBy($sorting->orders);
+        }
         $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 10]);
         $models = $query
                     ->offset($pages->offset)
                     ->limit($pages->limit)
@@ -64,6 +73,8 @@ class ThreadController extends Controller
         return $this->render('index', [
             'models' => $models,
             'pages' => $pages,
+            'sort' => $sort,
+            'direction' => $direction
         ]);
     }
 
