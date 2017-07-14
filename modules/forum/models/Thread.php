@@ -6,6 +6,8 @@ use Yii;
 use yii\db\Expression;
 use yii\db\ActiveRecord;
 use app\modules\forum\components\DisallowUrlsValidator;
+use app\modules\forum\events\ModelViewedEventInterface;
+use app\modules\forum\repositories\ThreadRepository;
 
 /**
  * This is the model class for table "threads".
@@ -17,8 +19,13 @@ use app\modules\forum\components\DisallowUrlsValidator;
  * @property integer $author
  * @property integer $views
  */
-class Thread extends ActiveRecord
+class Thread extends ActiveRecord implements ModelViewedEventInterface
 {
+    public function init()
+    {
+        $this->on(ModelViewedEventInterface::EVENT_MODEL_VIEWED, [$this, 'handleViews'], new ThreadRepository);
+    }
+
     /**
      * @inheritdoc
      */
@@ -93,5 +100,16 @@ class Thread extends ActiveRecord
                     ->select(['thread_id', 'counted' => 'count(*)'])
                     ->groupBy('thread_id')
                     ->asArray(true);
+    }
+
+    public function handleViews($event)
+    {
+        $threadRepository = $event->data;
+        $userId = isset(\Yii::$app->user->id) ? \Yii::$app->user->id : 0;
+        $view = $threadRepository->findViewByUser($this->id, $userId);
+        if(!isset($view) || strtotime($view->creation_date) < strtotime('-1 day')) {
+            $threadRepository->saveViewByUser($this->id, $userId);
+            $threadRepository->incrementView($this->id);
+        }
     }
 }
