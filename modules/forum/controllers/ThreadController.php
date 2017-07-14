@@ -53,6 +53,7 @@ class ThreadController extends Controller
     public function actionIndex()
     {
         $query = $this->threadRepository->find();
+        $query->with('repliesAggregation');
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $models = $query

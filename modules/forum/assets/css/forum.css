@@ -30,6 +30,11 @@
     font-weight: bold;
 }
 
+.thread-list-item-replies-count {
+    margin-top: -20px;
+    font-weight: bold;
+}
+
 .thread-question {
     padding-bottom: 30px;
     margin-bottom: 30px;

@@ -77,4 +77,21 @@ class Thread extends ActiveRecord
     {
         return $this->hasMany(Post::className(), ['thread_id' => 'id']);
     }
+
+    public function getRepliesCount()
+    {
+        if($this->isNewRecord) {
+            return null;
+        }
+
+        return empty($this->repliesAggregation) ? 0 : $this->repliesAggregation[0]['counted'];
+    }
+
+    public function getRepliesAggregation()
+    {
+        return $this->getPosts()
+                    ->select(['thread_id', 'counted' => 'count(*)'])
+                    ->groupBy('thread_id')
+                    ->asArray(true);
+    }
 }

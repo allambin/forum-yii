@@ -23,10 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $user = User::findIdentity($model->author); ?>
         <div class="thread-list-item">
             <div class="thread-list-item-title"><?= Html::a(Yii::t('app', Html::encode($model->title)), ['view', 'id' => $model->id]); ?></div>
-            <div class="color-text-lightest in-caps"><?= Yii::t('app', 'Published at {date} by <span class="accent">{username}</span>', [
-                'date' => $model->creation_date,
-                'username' => $user->username
-            ]) ?></div>
+            <div class="color-text-lightest in-caps">
+                <?= Yii::t('app', 'Published at {date} by <span class="accent">{username}</span>', [
+                    'date' => $model->creation_date,
+                    'username' => $user->username
+                ]) ?>
+            </div>
+            <div class="thread-list-item-replies-count color-text-lightest pull-right">
+                <?= Yii::t('app', '{count,plural,=0{no reply} =1{1 reply} other{# replies}}', ['count' => $model->repliesCount]) ?>
+            </div>
         </div>
     <?php endforeach; ?>
     </div>
