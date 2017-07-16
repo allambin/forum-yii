@@ -113,7 +113,7 @@ class AppUser extends ActiveRecord implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        throw new \yii\base\NotSupportedException();
+        return $this->getAttribute('auth_key') === $authKey;
     }
 
     /**
