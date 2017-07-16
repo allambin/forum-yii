@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1 class="thread-question-title"><?= Html::encode($this->title) ?></h1>
             <p class="color-text-lightest in-caps"><?= Yii::t('app', 'Published at {date} by <span class="accent">{username}</span>', [
                 'date' => $model->creation_date,
-                'username' => $user->username
+                'username' => $model->user->username
             ]) ?></p>
             <div class="thread-question-body"><?= $model->content; ?></div>
             <?php
@@ -29,12 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </div>
         <?php foreach($model->posts as $post): ?>
-        <?php $user = User::findIdentity($post->author); ?>
         <div class="thread-reply">
             <div class="thread-reply-title color-text-lightest">
                 <?= Yii::t('app', '<span class="accent">{username}</span> - {date}', [
                     'date' => $post->creation_date,
-                    'username' => $user->username
+                    'username' => $post->user->username
                 ]) ?>
             </div>
             <div><?= $post->content; ?></div>

@@ -86,13 +86,11 @@ class ThreadController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $user = User::findIdentity($model->author);
 
         $model->trigger(Thread::EVENT_MODEL_VIEWED);
 
         return $this->render('view', [
             'model' => $model,
-            'user' => $user
         ]);
     }
 

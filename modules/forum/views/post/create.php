@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\modules\forum\models\Post */
 
 $this->title = Yii::t('app', 'Create Post');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Threads'), 'url' => ['thread/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="post-create">

@@ -41,13 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'showAggregateRating' => false,
     ]);
     ?>
-        <?php $user = User::findIdentity($model->author); ?>
         <div class="thread-list-item">
             <div class="thread-list-item-title"><?= Html::a(Yii::t('app', Html::encode($model->title)), ['view', 'id' => $model->id]); ?></div>
             <div class="color-text-lightest in-caps">
                 <?= Yii::t('app', 'Published at {date} by <span class="accent">{username}</span>', [
                     'date' => $model->creation_date,
-                    'username' => $user->username
+                    'username' => $model->user->username
                 ]) ?>
             </div>
             <div class="thread-list-item-replies-count color-text-lightest pull-right">
