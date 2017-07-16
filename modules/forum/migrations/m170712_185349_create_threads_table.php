@@ -4,9 +4,9 @@ use yii\db\Migration;
 use yii\db\Schema;
 
 /**
- * Handles the creation of table `theads`.
+ * Handles the creation of table `threads`.
  */
-class m170712_185349_create_theads_table extends Migration
+class m170712_185349_create_threads_table extends Migration
 {
     /**
      * @inheritdoc
@@ -16,10 +16,10 @@ class m170712_185349_create_theads_table extends Migration
         $this->createTable('threads', [
             'id' => $this->primaryKey(),
             'title' => Schema::TYPE_STRING . ' NOT NULL',
-            'content' => Schema::TYPE_TEXT,
+            'content' => Schema::TYPE_TEXT . ' NOT NULL',
             'creation_date' => Schema::TYPE_TIMESTAMP,
-            'author' => Schema::TYPE_INTEGER,
-            'views' => Schema::TYPE_SMALLINT . ' UNSIGNED NOT NULL DEFAULT 0'
+            'author' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'views' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL DEFAULT 0'
         ]);
     }
 
@@ -28,6 +28,6 @@ class m170712_185349_create_theads_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('theads');
+        $this->dropTable('threads');
     }
 }

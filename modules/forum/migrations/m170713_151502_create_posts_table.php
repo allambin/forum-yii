@@ -15,9 +15,9 @@ class m170713_151502_create_posts_table extends Migration
     {
         $this->createTable('posts', [
             'id' => $this->primaryKey(),
-            'content' => Schema::TYPE_TEXT,
+            'content' => Schema::TYPE_TEXT . ' NOT NULL',
             'creation_date' => Schema::TYPE_TIMESTAMP,
-            'author' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
+            'author' => Schema::TYPE_INTEGER . ' NOT NULL',
             'thread_id' => $this->integer()->notNull()
         ]);
 
