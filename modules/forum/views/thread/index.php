@@ -35,6 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="thread-list">
     <?php foreach ($models as $model) : ?>
+    <?php
+    echo \chiliec\vote\widgets\Vote::widget([
+        'model' => $model,
+        'showAggregateRating' => false,
+    ]);
+    ?>
         <?php $user = User::findIdentity($model->author); ?>
         <div class="thread-list-item">
             <div class="thread-list-item-title"><?= Html::a(Yii::t('app', Html::encode($model->title)), ['view', 'id' => $model->id]); ?></div>
@@ -45,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
             <div class="thread-list-item-replies-count color-text-lightest pull-right">
-                <?= Yii::t('app', '{count,plural,=0{no reply} =1{1 reply} other{# replies}}', ['count' => $model->repliesCount]) ?> | 
+                <?= Yii::t('app', '{count,plural,=0{no reply} =1{1 reply} other{# replies}}', ['count' => $model->repliesCount]) ?> |
                 <?= Yii::t('app', '{count,plural,=0{no view} =1{1 view} other{# views}}', ['count' => $model->views]) ?>
             </div>
         </div>

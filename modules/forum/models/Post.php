@@ -68,6 +68,9 @@ class Post extends ActiveRecord
                 ],
                 'value' => new Expression('NOW()'),
             ],
+            'rating' => [
+                'class' => \chiliec\vote\behaviors\RatingBehavior::className(),
+            ],
         ];
     }
 }

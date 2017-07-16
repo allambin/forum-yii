@@ -74,6 +74,9 @@ class Thread extends ActiveRecord implements ModelViewedEventInterface
                 ],
                 'value' => new Expression('NOW()'),
             ],
+            'rating' => [
+                'class' => \chiliec\vote\behaviors\RatingBehavior::className(),
+            ],
         ];
     }
 

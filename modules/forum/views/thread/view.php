@@ -21,6 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'username' => $user->username
             ]) ?></p>
             <div class="thread-question-body"><?= $model->content; ?></div>
+            <?php
+            echo \chiliec\vote\widgets\Vote::widget([
+                'model' => $model,
+                'showAggregateRating' => false,
+            ]);
+            ?>
         </div>
         <?php foreach($model->posts as $post): ?>
         <?php $user = User::findIdentity($post->author); ?>
@@ -32,6 +38,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
             <div><?= $post->content; ?></div>
+            <?php
+            echo \chiliec\vote\widgets\Vote::widget([
+                'model' => $post,
+                'showAggregateRating' => false,
+            ]);
+            ?>
         </div>
         <?php endforeach; ?>
     </div>
