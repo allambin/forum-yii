@@ -73,4 +73,12 @@ class Post extends ActiveRecord
             ],
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(\app\modules\auth\models\AppUser::className(), ['id' => 'author']);
+    }
 }

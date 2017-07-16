@@ -115,4 +115,12 @@ class Thread extends ActiveRecord implements ModelViewedEventInterface
             $threadRepository->incrementView($this->id);
         }
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(\app\modules\auth\models\AppUser::className(), ['id' => 'author']);
+    }
 }
